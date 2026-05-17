@@ -1,0 +1,160 @@
+# PROJECT BRIEF: ElitePerformance — Corporate Bonus API
+
+You are a senior Java backend developer. Build a complete, production-ready Spring Boot REST API project from scratch, then create a GitHub repository and push all code to it.
+
+---
+
+## Context
+
+A multinational logistics company (GlobalSync) needs to automate its annual employee performance bonus system. Employees submit self-assessment KPI scores; managers/admins verify and process bonuses.
+
+---
+
+## Marking Criteria (Total: 50 Marks)
+
+### 1. Java & OOP Concepts — 5 Marks
+
+| Criteria | Marks |
+|----------|-------|
+| Proper class design, encapsulation, inheritance, interfaces | 2 |
+| Collections, generics, enums, streams | 2 |
+| Exception handling, try-with-resources, I/O | 1 |
+
+### 2. Spring Framework Integration — 30 Marks
+
+| Criteria | Marks |
+|----------|-------|
+| Spring Boot + Maven project structure | 5 |
+| REST API with full validation | 10 |
+| Spring JDBC with NamedParameterJdbcTemplate, minimum 5 DB entities, transaction management with full rollback | 5 |
+| Spring Security with JWT token-based authentication & role-based authorization | 5 |
+| Layered architecture: Controller → Service → Repository | 5 |
+
+---
+
+## Database Tables (MySQL)
+
+1. `employees` — employee_id, name, designation, base_salary, role (EMPLOYEE/MANAGER/ADMIN), last_promotion_date
+2. `performance_reviews` — review_id, employee_id, review_year, task_completion, attendance, team_collaboration, problem_solving, communication, leadership, client_satisfaction, total_kpi_score, category, created_at
+3. `bonus_records` — bonus_id, employee_id, review_year, total_kpi_score, category, bonus_percentage, bonus_amount, total_compensation, created_at
+4. `users` — user_id, employee_id (FK), username, password (BCrypt), role
+5. `audit_logs` — log_id, employee_id, action, performed_by, timestamp
+
+---
+
+## KPI System
+
+7 KPI parameters with maximum points:
+
+| KPI Parameter | Max Points |
+|---------------|------------|
+| Task Completion Rate | 25 |
+| Attendance & Punctuality | 15 |
+| Team Collaboration | 15 |
+| Problem Solving | 15 |
+| Communication | 10 |
+| Leadership & Initiative | 10 |
+| Client Satisfaction | 10 |
+| **Total** | **100** |
+
+**Formula:** `Total KPI = TC + AT + TCB + PS + COM + LD + CS`
+
+### Bonus Tiers
+
+| Tier | KPI Score Range | Bonus % |
+|------|----------------|---------|
+| Gold | 90 – 100 | 20% |
+| Silver | 75 – 89 | 12% |
+| Bronze | 60 – 74 | 5% |
+| No Tier | Below 60 | 0% |
+
+### Calculations
+
+- `Bonus Amount = Base Salary × Bonus% / 100`
+- `Total Compensation = Base Salary + Bonus Amount`
+
+---
+
+## REST API Endpoints
+
+| Method | Endpoint | Role | Description |
+|--------|----------|------|-------------|
+| POST | /api/auth/register | Public | Register user |
+| POST | /api/auth/login | Public | Login, returns JWT |
+| POST | /api/performances/calculate | MANAGER, ADMIN | Submit KPI & calculate bonus |
+| GET | /api/bonuses/my | EMPLOYEE | View own bonus records |
+| GET | /api/bonuses/all | ADMIN | View all employee bonuses |
+| GET | /api/employees | ADMIN | List all employees |
+| GET | /api/employees/{id} | ADMIN, MANAGER | Get employee details |
+
+---
+
+## RBAC (Spring Security + JWT)
+
+- **EMPLOYEE** — can only view own bonus records
+- **MANAGER** — can submit KPI reviews
+- **ADMIN** — full access: view all bonuses, all employees
+
+---
+
+## Validation Rules
+
+- KPI scores cannot be negative or exceed their maximum
+- Review year must be valid (not future)
+- Employee must exist
+- No duplicate review for same employee + same year
+
+---
+
+## OOP Requirements
+
+To satisfy the 5-mark OOP section:
+
+- Use an `enum` for `EmployeeCategory` (GOLD, SILVER, BRONZE, NO_TIER) and `Role` (EMPLOYEE, MANAGER, ADMIN)
+- Use interfaces for repository layer (e.g. `EmployeeRepository`, `BonusRepository`)
+- Use generics in service/utility classes where appropriate
+- Use Java Streams for KPI score aggregation or filtering
+- Custom exception classes: `EmployeeNotFoundException`, `DuplicateReviewException`, `InvalidKpiScoreException`
+- Global exception handler using `@ControllerAdvice`
+- Try-with-resources where applicable (e.g. file I/O or resource handling)
+
+---
+
+## Tech Stack
+
+| Technology | Requirement |
+|------------|-------------|
+| Language | Java 17+ |
+| Framework | Spring Boot 3.x |
+| Database Access | Spring JDBC (NamedParameterJdbcTemplate) — **no JPA/Hibernate** |
+| Security | Spring Security 6 with JWT (jjwt library) |
+| Database | MySQL |
+| Build Tool | Maven |
+| Optional | Lombok |
+
+---
+
+## Project Structure
+
+```
+src/main/java/com/globalsync/eliteperformance/
+├── config/          # SecurityConfig, JwtConfig
+├── controller/      # AuthController, EmployeeController, PerformanceController, BonusController
+├── service/         # EmployeeService, PerformanceService, BonusService, JwtService
+├── repository/      # Interfaces + JDBC implementations
+├── model/           # Employee, PerformanceReview, BonusRecord, User, AuditLog
+├── dto/             # Request/Response DTOs
+├── enums/           # Role, EmployeeCategory
+├── exception/       # Custom exceptions + GlobalExceptionHandler
+└── util/            # KpiCalculator, BonusCalculator
+```
+
+---
+
+## Deliverables
+
+1. Create a GitHub repository named `elite-performance-api`
+2. Implement the full project as described above
+3. Include `schema.sql` with all CREATE TABLE statements and sample data
+4. Include a detailed `README.md` with setup instructions, all endpoints, sample requests/responses, and how to run locally
+5. Push everything to the GitHub repo and share the link
