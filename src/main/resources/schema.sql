@@ -70,13 +70,13 @@ SELECT 3, 'Nadia Alvarez', 'HR Administrator', 110000.00, 'ADMIN', '2022-06-20'
 WHERE NOT EXISTS (SELECT 1 FROM employees WHERE employee_id = 3);
 
 INSERT INTO users (employee_id, username, password, role)
-SELECT 1, 'employee', '$2a$10$7EqJtq98hPqEX7fNZaFWoOhi5ZdT.Ww.2K5rWtUL7ex4gzaKNCJ9W', 'EMPLOYEE'
+SELECT 1, 'employee', '$2a$10$wam5UR.VMvuhRElr5s39zeGJqCsILj4./y7zER43L1zSm3bZCsAKm', 'EMPLOYEE'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'employee');
 
 INSERT INTO users (employee_id, username, password, role)
-SELECT 2, 'manager', '$2a$10$7EqJtq98hPqEX7fNZaFWoOhi5ZdT.Ww.2K5rWtUL7ex4gzaKNCJ9W', 'MANAGER'
+SELECT 2, 'manager', '$2a$10$wam5UR.VMvuhRElr5s39zeGJqCsILj4./y7zER43L1zSm3bZCsAKm', 'MANAGER'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'manager');
 
 INSERT INTO users (employee_id, username, password, role)
-SELECT 3, 'admin', '$2a$10$7EqJtq98hPqEX7fNZaFWoOhi5ZdT.Ww.2K5rWtUL7ex4gzaKNCJ9W', 'ADMIN'
+SELECT 3, 'admin', '$2a$10$wam5UR.VMvuhRElr5s39zeGJqCsILj4./y7zER43L1zSm3bZCsAKm', 'ADMIN'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'admin');
