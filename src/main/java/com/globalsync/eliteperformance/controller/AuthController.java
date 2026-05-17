@@ -1,16 +1,18 @@
 package com.globalsync.eliteperformance.controller;
 
-import com.globalsync.eliteperformance.dto.AuthResponse;
-import com.globalsync.eliteperformance.dto.LoginRequest;
-import com.globalsync.eliteperformance.dto.RegisterRequest;
-import com.globalsync.eliteperformance.service.AuthService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.globalsync.eliteperformance.dto.AuthResponse;
+import com.globalsync.eliteperformance.dto.LoginRequest;
+import com.globalsync.eliteperformance.dto.RegisterRequest;
+import com.globalsync.eliteperformance.service.AuthService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
